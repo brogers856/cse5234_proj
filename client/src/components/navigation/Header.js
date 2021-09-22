@@ -4,7 +4,8 @@ import {
     UserAddOutlined,
     UserOutlined,
     ShoppingOutlined,
-    SettingOutlined
+    SettingOutlined,
+    ShoppingCartOutlined
 } from "@ant-design/icons";
 
 const {SubMenu, Item} = Menu;
@@ -22,21 +23,22 @@ const Header= () => {
                 Home
             </Item>
 
+            <Item key="cart" icon={<ShoppingCartOutlined />} style={{float: 'left'}}>
+                My Cart
+            </Item>
+
             <SubMenu icon={<SettingOutlined />} title="My Account" style={{float: 'left'}}>
                 <Item key="setting:1">Option 1</Item>
                 <Item key="setting:2">Option 2</Item>
             </SubMenu>
             
             <Item key="signup" icon={<UserAddOutlined />} style={{float: 'right'}}>
-                
                 Sign Up
             </Item>
 
             <Item key="login" icon={<UserOutlined />} style={{float: 'right'}}>
                 Login
             </Item>
-           
-            
       </Menu>
     )
 };
