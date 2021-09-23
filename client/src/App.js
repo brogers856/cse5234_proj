@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Login from './pages/authentication/Login';
@@ -8,6 +8,23 @@ import Header from './components/navigation/Header';
 import NotFound from './pages/404/NotFound';
 
 const App = () => {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    //setCart(JSON.parse(window.localStorage.getItem('cart')) || [])
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('cart', cart)
+  }, [cart]);
+
+  function addHandler() {
+    //setCart()
+  }
+
+  function removeHandler(){
+
+  }
   return (
     <>
       <Header />
