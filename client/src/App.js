@@ -11,19 +11,35 @@ const App = () => {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    //setCart(JSON.parse(window.localStorage.getItem('cart')) || [])
+    setCart(JSON.parse(window.localStorage.getItem('cart') || "[]"));
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('cart', cart)
+    window.localStorage.setItem('cart', JSON.stringify(cart))
   }, [cart]);
 
-  function addHandler() {
-    //setCart()
+  function addHandler(newItem) {
+    let oldCart = JSON.parse(window.localStorage.getItem('cart'))
+    let found = false;
+    for(var i = 0; i < oldCart.length; i++) {
+      var obj = oldCart[i];
+      if(newItem.key === obj.key){
+        found = true;
+        obj.quantity++;
+      }
+    }
+    if(found === false) {
+      var joined = cart.concat(newItem)
+      setCart(joined)
+    } else {
+      setCart(oldCart)
+    }
   }
 
-  function removeHandler(){
-
+  function removeHandler(removeItem){
+    setCart(cart.filter(function(item) {
+      return item.key !== removeItem.key
+    }))
   }
   return (
     <>
@@ -34,7 +50,7 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/shipping" component={Shipping} />
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" render={(props) => <Home {...props} handler={addHandler}/>} />
 
           {/* Default path. All other (and undefined) routes go here. */}
           <Route component={NotFound} />
