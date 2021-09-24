@@ -1,30 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table, InputNumber, Space, Button } from "antd";
 
 function onChange(value, record) {
   data = data.map((item) => {
-    if(item.key === record.key) {
+    if (item.key === record.key) {
       item.quantity = value;
     }
     return item
   })
 }
-
-const columns = [
-  { title: 'Product', dataIndex: 'product', key: 'product' },
-  { title: 'Description', dataIndex: 'description', key: 'description' },
-  { title: 'Price', dataIndex: 'price', key: 'price' },
-  {
-    title: 'Quantity', dataIndex: '', key: 'quantity',
-    render: (record) => <InputNumber min={0} max={100} defaultValue={0} onChange={(value) => onChange(value, record)} />,
-  },
-  {
-    title: 'Purchase',
-    dataIndex: '',
-    key: 'x',
-    render: (record) => <Button type="primary" onClick={()=> console.log(record)}>Add to Cart</Button>,
-  },
-];
 
 let data = [
   {
@@ -66,30 +50,59 @@ let data = [
 
 
 const Home = (props) => {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    setCart(JSON.parse(window.localStorage.getItem('cart')));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart]);
+
+  function addItem(newItem) {
+    let oldCart = JSON.parse(window.localStorage.getItem('cart'))
+    let found = false;
+    for (let i = 0; i < oldCart.length; i++) {
+      let obj = oldCart[i];
+      if (newItem.key === obj.key) {
+        found = true;
+        obj.quantity += newItem.quantity;
+      }
+    }
+    if (found === false) {
+      let joined = cart.concat(newItem)
+      setCart(joined)
+    } else {
+      setCart(oldCart)
+    }
+  }
+
   const columns = [
     { title: 'Product', dataIndex: 'product', key: 'product' },
     { title: 'Description', dataIndex: 'description', key: 'description' },
     { title: 'Price', dataIndex: 'price', key: 'price' },
     {
       title: 'Quantity', dataIndex: '', key: 'quantity',
-      render: (record) => <InputNumber min={1} max={100} defaultValue={1} onChange={(value) => onChange(value, record)} />,
+      render: (record) => <InputNumber min={1} max={100} defaultValue={record.quantity} onChange={(value) => onChange(value, record)} />,
     },
     {
       title: 'Purchase',
       dataIndex: '',
       key: 'x',
-      render: (record) => <Button type="primary" onClick={()=> props.handler(record)}>Add to Cart</Button>,
+      render: (record) => <Button type="primary" onClick={() => addItem(record)}>Add to Cart</Button>,
     },
   ];
 
-  return(
-  <>
-    <Space direction="vertical" size="large"></Space>
-    <Table
-      columns={columns}
-      dataSource={data}
-    />
-  </>
-)};
+  return (
+    <>
+      <Space direction="vertical" size="large"></Space>
+      <Table
+        columns={columns}
+        dataSource={data}
+      />
+    </>
+  )
+};
 
 export default Home;
