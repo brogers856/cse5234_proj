@@ -1,16 +1,29 @@
-import React from "react";
-import { Table, InputNumber, Space, Button } from "antd";
+import React, { useState, useEffect } from "react";
+import { Table, InputNumber, Button } from "antd";
 
 const Home = (props) => {
+  const [cart, setCart] = useState([]);
 
-  function onChange(value, record) {
-    data = data.map((item) => {
-      if (item.key === record.key) {
-        item.quantity = value;
+  function addItem(newItem) {
+    let oldCart = JSON.parse(window.localStorage.getItem('cart'))
+    let found = false;
+    for (let i = 0; i < oldCart.length; i++) {
+      let obj = oldCart[i];
+      if (newItem.key === obj.key) {
+        found = true;
+        obj.quantity += newItem.quantity;
       }
       return item
     })
   }
+ 
+  useEffect(() => {
+    setCart(JSON.parse(window.localStorage.getItem('cart')));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart]);
 
   let data = [
     {
@@ -68,7 +81,6 @@ const Home = (props) => {
 
   return (
     <>
-      <Space direction="vertical" size="large"></Space>
       <Table
         columns={columns}
         dataSource={data}
