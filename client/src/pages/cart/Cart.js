@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
-import { Table, Space, Button, InputNumber } from "antd";
+import { Table, Button, InputNumber } from "antd";
 
 const Cart = (props) => {
     const [cart, setCart] = useState([]);

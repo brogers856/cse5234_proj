@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, InputNumber, Space, Button } from "antd";
+import { Table, InputNumber, Button } from "antd";
 
 function onChange(value, record) {
   data = data.map((item) => {
@@ -52,14 +52,6 @@ let data = [
 const Home = (props) => {
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    setCart(JSON.parse(window.localStorage.getItem('cart')));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('cart', JSON.stringify(cart))
-  }, [cart]);
-
   function addItem(newItem) {
     let oldCart = JSON.parse(window.localStorage.getItem('cart'))
     let found = false;
@@ -77,6 +69,14 @@ const Home = (props) => {
       setCart(oldCart)
     }
   }
+ 
+  useEffect(() => {
+    setCart(JSON.parse(window.localStorage.getItem('cart')));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart]);
 
   const columns = [
     { title: 'Product', dataIndex: 'product', key: 'product' },
@@ -96,7 +96,6 @@ const Home = (props) => {
 
   return (
     <>
-      <Space direction="vertical" size="large"></Space>
       <Table
         columns={columns}
         dataSource={data}

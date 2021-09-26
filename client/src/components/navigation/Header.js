@@ -28,7 +28,7 @@ const Header = () => {
                 <Link to='/cart'>My Cart</Link>
             </Item>
 
-            <SubMenu icon={<SettingOutlined />} title="My Account" style={{ float: 'left' }}>
+            <SubMenu key="account" icon={<SettingOutlined />} title="My Account" style={{ float: 'left' }}>
                 <Item key="setting:1">Option 1</Item>
                 <Item key="setting:2">Option 2</Item>
             </SubMenu>

@@ -1,6 +1,9 @@
 export { default as Home } from './home/Home';
 export { default as Cart } from './cart/Cart';
-export { default as Shipping } from './shipping/Shipping';
-export { default as NotFound } from './404/NotFound';
+export { default as Shipping } from './checkout/Shipping';
+export { default as Error404 } from './http-response/Error404';
 export { default as Login } from './authentication/Login';
 export { default as Register } from './authentication/Register';
+export { default as Confirm } from './confirm/Confirm';
+export { default as Payment } from './checkout/Payment';
+export { default as Error500 } from './http-response/Error500';
