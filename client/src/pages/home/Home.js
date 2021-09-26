@@ -1,82 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Table, InputNumber, Space, Button } from "antd";
 
-function onChange(value, record) {
-  data = data.map((item) => {
-    if (item.key === record.key) {
-      item.quantity = value;
-    }
-    return item
-  })
-}
-
-let data = [
-  {
-    key: 1,
-    product: 'Laptop',
-    price: 500,
-    quantity: 1,
-    description: 'Like new'
-  },
-  {
-    key: 2,
-    product: 'Headphones',
-    price: 50,
-    quantity: 1,
-    description: 'Lightly used'
-  },
-  {
-    key: 3,
-    product: 'Keyboard',
-    price: 25,
-    quantity: 1,
-    description: 'Brand new'
-  },
-  {
-    key: 4,
-    product: 'Monitor',
-    price: 75,
-    quantity: 1,
-    description: 'Lightly used'
-  },
-  {
-    key: 5,
-    product: 'Desktop',
-    price: 800,
-    quantity: 1,
-    description: 'Heavy use, scratches/dents'
-  },
-];
-
-
 const Home = (props) => {
-  const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    setCart(JSON.parse(window.localStorage.getItem('cart')));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('cart', JSON.stringify(cart))
-  }, [cart]);
-
-  function addItem(newItem) {
-    let oldCart = JSON.parse(window.localStorage.getItem('cart'))
-    let found = false;
-    for (let i = 0; i < oldCart.length; i++) {
-      let obj = oldCart[i];
-      if (newItem.key === obj.key) {
-        found = true;
-        obj.quantity += newItem.quantity;
+  function onChange(value, record) {
+    data = data.map((item) => {
+      if (item.key === record.key) {
+        item.quantity = value;
       }
-    }
-    if (found === false) {
-      let joined = cart.concat(newItem)
-      setCart(joined)
-    } else {
-      setCart(oldCart)
-    }
+      return item
+    })
   }
+
+  let data = [
+    {
+      key: 1,
+      product: 'Laptop',
+      price: 500,
+      quantity: 1,
+      description: 'Like new'
+    },
+    {
+      key: 2,
+      product: 'Headphones',
+      price: 50,
+      quantity: 1,
+      description: 'Lightly used'
+    },
+    {
+      key: 3,
+      product: 'Keyboard',
+      price: 25,
+      quantity: 1,
+      description: 'Brand new'
+    },
+    {
+      key: 4,
+      product: 'Monitor',
+      price: 75,
+      quantity: 1,
+      description: 'Lightly used'
+    },
+    {
+      key: 5,
+      product: 'Desktop',
+      price: 800,
+      quantity: 1,
+      description: 'Heavy use, scratches/dents'
+    },
+  ];
 
   const columns = [
     { title: 'Product', dataIndex: 'product', key: 'product' },
@@ -90,7 +62,7 @@ const Home = (props) => {
       title: 'Purchase',
       dataIndex: '',
       key: 'x',
-      render: (record) => <Button type="primary" onClick={() => addItem(record)}>Add to Cart</Button>,
+      render: (record) => <Button type="primary" onClick={() => props.addHandler(record)}>Add to Cart</Button>,
     },
   ];
 

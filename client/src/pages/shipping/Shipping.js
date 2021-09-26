@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Button, Select } from 'antd';
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -54,7 +55,7 @@ const Shipping = () => {
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    <Link to ="/payment">Submit</Link>
                 </Button>
             </Form.Item>
         </Form>
