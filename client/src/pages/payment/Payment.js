@@ -1,11 +1,14 @@
 import React from 'react';
-import { Form, Input, Button, InputNumber, message} from 'antd';
+import { Form, Input, Button} from 'antd';
 import { CreditCardOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router';
 
 const Payment = (props) => {
+    let history = useHistory();
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        window.localStorage.setItem('paymentInfo', JSON.stringify(values))
+        history.push('/summary')
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -36,7 +39,7 @@ const Payment = (props) => {
         <Form.Item label="Credit Card">
             <Input.Group compact>
                 <Form.Item
-                    name={['creditcard', 'number']}
+                    name={'number'}
                     noStyle
                     rules={[{ required: true, message: 'Card number is required' },
                     () => ({
@@ -55,7 +58,7 @@ const Payment = (props) => {
                     <Input prefix={<CreditCardOutlined />} style={{ width: '80%' }} placeholder="Credit card number" />
                 </Form.Item>
                 <Form.Item
-                    name={['creditcard', 'expiration']}
+                    name={'expiration'}
                     noStyle
                     rules={[{ required: true, message: 'Expiration date is required' },
                     {
@@ -67,7 +70,7 @@ const Payment = (props) => {
                     <Input style={{ width: '10%' }} placeholder="MM/YY" />
                 </Form.Item>
                 <Form.Item
-                    name={['creditcard', 'security']}
+                    name={'security'}
                     noStyle
                     rules={[
                     { required: true, message: 'Security number is required' },

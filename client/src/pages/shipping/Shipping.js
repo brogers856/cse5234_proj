@@ -1,13 +1,16 @@
 import React from "react";
 import { Form, Input, Button, Select } from 'antd';
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
 
 
 const Shipping = () => {
+    let history = useHistory();
+
     const onFinish = (values) => {
-        console.log('Success:', values);
+        window.localStorage.setItem('shippingInfo', JSON.stringify(values))
+        history.push('/payment')
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -49,13 +52,13 @@ const Shipping = () => {
                 </Select>
             </Form.Item>
 
-            <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email', required: true, message: 'Email is required' }]}>
+            <Form.Item name={'email'} label="Email" rules={[{ type: 'email', required: true, message: 'Email is required' }]}>
                 <Input />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                    <Link to ="/payment">Submit</Link>
+                <Button htmlType="submit" type="primary">
+                    Submit
                 </Button>
             </Form.Item>
         </Form>
