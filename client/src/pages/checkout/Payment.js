@@ -1,79 +1,123 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input, Button, Row } from "antd";
+import { CreditCardOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router";
 
-const Payment = () => {
+const Payment = (props) => {
+  let history = useHistory();
+
   const onFinish = (values) => {
-    const newInfo = {};
-
-    for (var key in Object.keys(values)) {
-      let k = Object.keys(values)[key];
-      newInfo[k] = values[k];
-    }
-
-    setPaymentInfo(newInfo);
-    window.localStorage.setItem("paymentInfo", JSON.stringify(newInfo));
-    console.log("Payment Info (State): ", paymentInfo);
-    console.log(
-      "Payment Info (Local Storage): ",
-      window.localStorage.getItem("paymentInfo", JSON.stringify(newInfo))
-    );
-
-    // Reroutes to following page given that the input is valid.
-    window.location.href = "/summary";
+    window.localStorage.setItem("paymentInfo", JSON.stringify(values));
+    history.push("/summary");
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
-  const [paymentInfo, setPaymentInfo] = useState({});
-
-  const [form] = Form.useForm();
-
+  function calculateTotal(data) {
+    let total = 0;
+    for (let i = 0; i < data.length; i++) {
+      total += data[i].price * data[i].quantity;
+    }
+    window.localStorage.setItem("total", total);
+    return total;
+  }
   return (
     <Row type="flex" align="middle" justify="center">
       <Form
-        form={form}
         name="basic"
-        initialValues={{ remember: true}}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item label="Payment Info">
+        <div>
+          <Row type="flex" align="middle" justify="center">
+            <h1>Your total is: ${calculateTotal(props.cart)}</h1>
+          </Row>
+        </div>
+        <Form.Item label="Credit Card">
+          <Input.Group>
             <Form.Item
-              name="cardNumber"
+              name={"number"}
               noStyle
-              rules={[{ required: true, message: "Card number is required." }]}
+              rules={[
+                { required: true, message: "Card number is required" },
+                () => ({
+                  validator(_, value) {
+                    if (value.length !== 15 && value.length !== 16) {
+                      return Promise.reject(
+                        new Error(
+                          "The credit card number must be 15 or 16 digits long"
+                        )
+                      );
+                    }
+                    if (!Number.isInteger(parseInt(value))) {
+                      return Promise.reject(
+                        new Error("The credit card number must be a number")
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
             >
-              <Input placeholder="Card Number" />
+              <Input
+                prefix={<CreditCardOutlined />}
+                style={{ width: "100%" }}
+                placeholder="Credit card number"
+              />
+            </Form.Item>
+          </Input.Group>
+          <Input.Group>
+            <Form.Item
+              name={"expiration"}
+              noStyle
+              rules={[
+                { required: true, message: "Expiration date is required" },
+                {
+                  pattern: new RegExp(
+                    /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/
+                  ),
+                  message: "Expiration date must be in MM/YY format",
+                },
+              ]}
+            >
+              <Input style={{ width: "50%" }} placeholder="MM/YY" />
             </Form.Item>
             <Form.Item
-              name="expiration"
+              name={"security"}
               noStyle
-              rules={[{ required: false, message: "Expiration is required." }]}
+              rules={[
+                { required: true, message: "Security number is required" },
+                () => ({
+                  validator(_, value) {
+                    if (value.length !== 3) {
+                      return Promise.reject(
+                        new Error("The security code must be 3 digits long")
+                      );
+                    }
+                    if (!Number.isInteger(parseInt(value))) {
+                      return Promise.reject(
+                        new Error("The security code must be a number")
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
             >
-              <Input placeholder="Expiration date (MM/YY)" />
+              <Input style={{ width: "50%" }} placeholder="CVC" />
             </Form.Item>
-            <Form.Item
-              name="securityCode"
-              noStyle
-              rules={[{ required: true, message: "CVC/CVV is required." }]}
-            >
-              <Input style={{ width: "50%" }} placeholder="CVC/CVV" />
-            </Form.Item>
-            <Form.Item
-              name="zip"
-              noStyle
-              rules={[{ required: true, message: "Postal Code is required" }]}
-            >
-              <Input style={{ width: "50%" }} placeholder="Postal Code" />
-            </Form.Item>
+          </Input.Group>
         </Form.Item>
 
-        <Form.Item style={{width:"125%"}} wrapperCol={{ offset: 8, span: 16 }}>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Continue to Checkout
+            Submit
           </Button>
         </Form.Item>
       </Form>

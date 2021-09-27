@@ -7,3 +7,4 @@ export { default as Register } from './authentication/Register';
 export { default as Confirm } from './confirm/Confirm';
 export { default as Payment } from './checkout/Payment';
 export { default as Error500 } from './http-response/Error500';
+export { default as Summary } from './summary/Summary';

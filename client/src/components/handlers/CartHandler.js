@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route } from 'react-router-dom';
-import { Home, Cart, Payment, Summary} from '../../pages';
+import { Home, Cart, Payment, Summary, Shipping} from '../../pages';
 
 const CartHandler = () => {
     const [cart, setCart] = useState([]);
@@ -56,6 +56,7 @@ const CartHandler = () => {
     <Switch>
         <Route exact path="/" render={(props) => <Home {...props} cart={cart} addHandler={addHandler} /> } />
         <Route exact path="/cart" render={(props) => <Cart {...props} cart={cart} addHandler={addHandler} removeAllHandler={removeAllHandler} removeHandler={removeHandler} changeHandler={changeHandler} />} />
+        <Route exact path="/shipping" render={(props) => <Shipping {...props} cart={cart} /> } />
         <Route exact path="/payment" render={(props) => <Payment {...props} cart={cart} /> } />
         <Route exact path="/summary" render={(props) => <Summary {...props} cart={cart} /> } />
       </Switch>

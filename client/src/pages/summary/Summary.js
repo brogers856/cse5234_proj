@@ -27,8 +27,8 @@ const Summary = (props) => {
             {shippingInfo !== null &&
                 <>
                 <h3>Shipping</h3>
-                <p><b>Address:</b> {shippingInfo.address.street}, {shippingInfo.address.state}</p>
-                <p><b>Method:</b> {shippingInfo.method}</p>
+                <p><b>Address:</b> {shippingInfo.addressLine1},{shippingInfo.addressLine1}</p>
+                <p><b>Shipping Method:</b> {shippingInfo.method}</p>
                 <p><b>Email:</b> {shippingInfo.email}</p>
                 </>
             }
@@ -40,7 +40,7 @@ const Summary = (props) => {
                 <p><b>Security Code:</b> {paymentInfo.security}</p>
                 </>
             }
-            <h3>Items</h3>
+            <h3>Items | Total: ${window.localStorage.getItem("total")}</h3>
             <Table
                 columns={columns}
                 dataSource={props.cart}
