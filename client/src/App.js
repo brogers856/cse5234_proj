@@ -9,7 +9,6 @@ const App = () => {
       <Header />
       <div style={{ marginLeft: "2rem", marginRight: "2rem", display: "flex", flexDirection: "column" }}>
         <Switch>
-          <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/confirmation" component={Confirm} />
