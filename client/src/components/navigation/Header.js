@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import {
@@ -8,23 +8,29 @@ import {
     SettingOutlined,
     ShoppingCartOutlined
 } from "@ant-design/icons";
+import { useHistory } from "react-router";
+
 
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
-    const [current, setCurrent] = useState('home');
+    let history = useHistory();
+
+    const [current, setCurrent] = useState('/');
 
     const handleClick = (event) => {
         setCurrent(event.key);
     };
 
+    let href=window.location.href.split('/')
+    href = href[3]
     return (
-        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-            <Item key="home" icon={<ShoppingOutlined />} style={{ float: 'left' }}>
+        <Menu  onClick={handleClick} defaultSelectedKeys={['/'+href]} selectedKeys={['/'+href]} mode="horizontal">
+            <Item key="/" icon={<ShoppingOutlined />} style={{ float: 'left' }}>
                 <Link to='/'>Home</Link>
             </Item>
 
-            <Item key="cart" icon={<ShoppingCartOutlined />} style={{ float: 'left' }}>
+            <Item key="/cart" icon={<ShoppingCartOutlined />} style={{ float: 'left' }}>
                 <Link to='/cart'>My Cart</Link>
             </Item>
 
