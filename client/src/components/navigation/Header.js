@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import {
+    HomeOutlined,
     UserAddOutlined,
     UserOutlined,
     ShoppingOutlined,
@@ -34,7 +35,7 @@ const Header = () => {
                 <Link to='/cart'>My Cart</Link>
             </Item>
 
-            <SubMenu key="account" icon={<SettingOutlined />} title="My Account" style={{ float: 'left' }}>
+            <SubMenu key="account" icon={<SettingOutlined />} title="My Account" style={{ float: 'right' }}>
                 <Item key="setting:1">Option 1</Item>
                 <Item key="setting:2">Option 2</Item>
             </SubMenu>
