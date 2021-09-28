@@ -1,0 +1,16 @@
+h2 {
+    display: flex;
+    justify-content: center;
+}
+
+h3 {
+    margin-top: 1.5rem;
+}
+
+.button_container {
+    display: flex;
+}
+
+.cancel_button {
+    margin-left: 2rem;
+}
