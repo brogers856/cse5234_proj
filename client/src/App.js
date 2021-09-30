@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { About, Error404, Login, Register, Confirm } from './pages';
-import { Header, CartHandler } from './components'
+import { Header, CartHandler, Footer } from './components'
 
 const App = () => {
   return (

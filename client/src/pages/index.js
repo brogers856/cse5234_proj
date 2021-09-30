@@ -8,9 +8,5 @@ export { default as Confirm } from './confirm/Confirm';
 export { default as Payment } from './checkout/Payment';
 export { default as Error500 } from './http-response/Error500';
 export { default as Summary } from './summary/Summary';
-<<<<<<< HEAD
 export { default as Home } from './home/Home';
-
-=======
 export {default as About} from './info/About'
->>>>>>> 1358187913078734abf33a2bfdb141441ecba09c
