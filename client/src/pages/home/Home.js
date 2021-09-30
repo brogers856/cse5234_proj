@@ -76,7 +76,6 @@ const Home = (props) => {
         props.addHandler(record)
         setVisible(true)
         setItem(record.product)
-        console.log(record.quantity)
         setQuantity(record.quantity)
         setTimeout(handleClose, 2000)
       }}>Add to Cart</Button>,
