@@ -1,11 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-
 import Login from './pages/authentication/Login';
 import Register from './pages/authentication/Register';
 import { Shipping, Confirm } from './pages';
 import Header from './components/navigation/Header';
-import {CartHandler} from './components';
+import { CartHandler, StepHandler } from './components';
 import NotFound from './pages/404/NotFound';
 
 const App = () => {
@@ -22,6 +21,11 @@ const App = () => {
 
           {/* Default path. All other (and undefined) routes go here. */}
           <Route component={NotFound} />
+        </Switch>
+        <Switch>
+          <Route exact path="/shipping" component={StepHandler} />
+          <Route exact path="/payment" component={StepHandler} />
+          <Route exact path="/summary" component={StepHandler} />
         </Switch>
       </div>
     </>

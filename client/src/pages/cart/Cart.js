@@ -4,6 +4,10 @@ import { Table, Button, InputNumber } from "antd";
 
 const Cart = (props) => {
 
+    function clickHandler() {
+        window.localStorage.setItem('step', "0")
+    }
+
     const columns = [
         { title: 'Product', dataIndex: 'product', key: 'product' },
         { title: 'Description', dataIndex: 'description', key: 'description' },
@@ -24,7 +28,7 @@ const Cart = (props) => {
             <Table
                 columns={columns}
                 dataSource={props.cart}
-                footer={() => <div><Button style={{ marginLeft: "auto" }} type="primary"><Link to="/shipping">Checkout</Link></Button> <Button style={{ marginLeft: "auto", marginTop: "2em", marginBottom: "2em", marginRight: "2em" }} type="primary" danger onClick={() => props.removeAllHandler()}>Remove all items</Button></div>}
+                footer={() => <div><Button style={{ marginLeft: "auto" }} type="primary" onClick={() => clickHandler()}><Link to="/shipping">Checkout</Link></Button> <Button style={{ marginLeft: "auto", marginTop: "2em", marginBottom: "2em", marginRight: "2em" }} type="primary" danger onClick={() => props.removeAllHandler()}>Remove all items</Button></div>}
             />
         </>
     )

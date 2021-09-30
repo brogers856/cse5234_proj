@@ -9,6 +9,7 @@ const Shipping = () => {
     let history = useHistory();
 
     const onFinish = (values) => {
+        window.localStorage.setItem('step', "1")
         window.localStorage.setItem('shippingInfo', JSON.stringify(values))
         history.push('/payment')
     };
