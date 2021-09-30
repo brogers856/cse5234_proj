@@ -4,6 +4,7 @@ const { Option } = Select;
 
 const Shipping = () => {
   const onFinish = (values) => {
+    window.localStorage.setItem('step', "1")
     const newInfo = {};
 
     for (var key in Object.keys(values)) {
@@ -95,8 +96,8 @@ const Shipping = () => {
 
   // Why do I have to do this?
   const stateList = [];
-  states.forEach(function(e) {
-    stateList.push({label: e, value: e})
+  states.forEach(function (e) {
+    stateList.push({ label: e, value: e })
   })
 
   return (
@@ -134,7 +135,7 @@ const Shipping = () => {
               rules={[{ required: true, message: "State is required" }]}
             >
               <Select
-                style={{ width: "50%"}}
+                style={{ width: "50%" }}
                 placeholder="State/Province"
                 options={stateList}
               />
@@ -142,8 +143,10 @@ const Shipping = () => {
             <Form.Item
               name="zip"
               noStyle
-              rules={[{ required: true, message: "Input a valid Postal Code",
-              pattern: new RegExp(/(^\d{5}$)|(^\d{5}-\d{4}$)/s) }]}
+              rules={[{
+                required: true, message: "Input a valid Postal Code",
+                pattern: new RegExp(/(^\d{5}$)|(^\d{5}-\d{4}$)/s)
+              }]}
             >
               <Input style={{ width: "50%" }} placeholder="Postal Code" />
             </Form.Item>
