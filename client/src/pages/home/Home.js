@@ -52,7 +52,6 @@ const Home = (props) => {
   function onChange(value, record) {
     let newData = data
     setData(newData.map((item) => {
-      console.log(value)
       if (item.key === record.key) {
         item.quantity = value;
       }
