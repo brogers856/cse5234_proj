@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { About, Error404, Login, Register, Confirm } from './pages';
-import { Header, CartHandler, StepHandler } from './components'
+import { Header, CartHandler } from './components'
 
 const App = () => {
   return (
@@ -16,11 +16,6 @@ const App = () => {
           <CartHandler></CartHandler>
           {/* Default path. All other (and undefined) routes go here. */}
           <Route component={Error404} />
-        </Switch>
-        <Switch>
-          <Route exact path="/shipping" component={StepHandler} />
-          <Route exact path="/payment" component={StepHandler} />
-          <Route exact path="/summary" component={StepHandler} />
         </Switch>
       </div>
     </>
