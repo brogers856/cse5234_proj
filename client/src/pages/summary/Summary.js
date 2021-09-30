@@ -2,6 +2,7 @@ import React from "react";
 import './Summary.css'
 import { Link } from "react-router-dom";
 import { Table, Button, Card, Row, Col } from "antd";
+import { ProcessBar } from "../../components";
 
 const Summary = (props) => {
     let shippingInfo = JSON.parse(window.localStorage.getItem('shippingInfo'))
@@ -10,13 +11,11 @@ const Summary = (props) => {
     const handleConfirmClick = () => {
         window.localStorage.setItem('cart', [])
         window.localStorage.setItem('total', null)
-        window.localStorage.setItem('step', null)
         window.localStorage.setItem('shippingInfo', null)
         window.localStorage.setItem('paymentInfo', null)
     }
 
     const handleCancelClick = () => {
-        window.localStorage.setItem('step', null)
         window.localStorage.setItem('shippingInfo', null)
         window.localStorage.setItem('paymentInfo', null)
     }
@@ -33,6 +32,7 @@ const Summary = (props) => {
     return (
         <>
             <div>
+                <ProcessBar page="3" />
                 <h2>Summary</h2>
                 <Row justify="space-around">
                     <Col span={8}>
