@@ -22,10 +22,10 @@ const Header = () => {
         setCurrent(event.key);
     };
 
-    let href=window.location.href.split('/')
+    let href = window.location.href.split('/')
     href = href[3]
     return (
-        <Menu  onClick={handleClick} defaultSelectedKeys={['/'+href]} selectedKeys={['/'+href]} mode="horizontal">
+        <Menu onClick={handleClick} defaultSelectedKeys={['/' + href]} selectedKeys={['/' + href]} mode="horizontal">
             <Item key="/" icon={<ShoppingOutlined />} style={{ float: 'left' }}>
                 <Link to='/'>Home</Link>
             </Item>
