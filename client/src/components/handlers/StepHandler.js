@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react'
-import { Steps } from 'antd';
+import { Steps, Row, Col } from 'antd';
+import './StepHandler.css'
 const { Step } = Steps;
 
 const StepHandler = () => {
@@ -10,11 +11,15 @@ const StepHandler = () => {
   }, [window.localStorage.getItem('step')]);
 
   return (
-    <Steps size="small" current={current}>
-      <Step title="Shipping" />
-      <Step title="Payment" />
-      <Step title="Confirmation" />
-    </Steps>
+    <Row className="step-container" type="flex" align="middle" justify="center">
+      <Col span={8}>
+        <Steps size="small" current={current}>
+          <Step title="Shipping" />
+          <Step title="Payment" />
+          <Step title="Confirmation" />
+        </Steps>
+      </Col>
+    </Row>
   )
 }
 

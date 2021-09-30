@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Button, Row } from "antd";
 import { CreditCardOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
+import "./Payment.css"
 
 const Payment = (props) => {
   let history = useHistory();
@@ -25,10 +26,9 @@ const Payment = (props) => {
     return total;
   }
   return (
-    <Row type="flex" align="middle" justify="center">
+    <Row className="payment-container" type="flex" align="middle" justify="center">
       <Form
         name="basic"
-        labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
@@ -40,7 +40,7 @@ const Payment = (props) => {
             <h1>Your total is: ${calculateTotal(props.cart)}</h1>
           </Row>
         </div>
-        <Form.Item label="Credit Card">
+        <Form.Item label="Credit Card" align="middle" justify="center">
           <Input.Group>
             <Form.Item
               name={"number"}
@@ -116,13 +116,13 @@ const Payment = (props) => {
           </Input.Group>
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
       </Form>
-    </Row>
+    </Row >
   );
 };
 

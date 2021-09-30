@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Space, Row, Radio, Select } from "antd";
+import './Shipping.css'
 const { Option } = Select;
 
 const Shipping = () => {
@@ -101,7 +102,7 @@ const Shipping = () => {
   })
 
   return (
-    <Row type="flex" align="middle" justify="center">
+    <Row className="shipping-container" type="flex" align="middle" justify="center">
       <Form
         form={form}
         name="basic"
@@ -174,7 +175,7 @@ const Shipping = () => {
           <Input />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Form.Item display="flex" justify="center" wrapperCol={{ offset: 4, span: 16 }}>
           <Button type="primary" htmlType="submit">
             Continue to Payment Details
           </Button>
