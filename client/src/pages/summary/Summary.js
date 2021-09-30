@@ -1,6 +1,7 @@
 import React from "react";
+import './Summary.css'
 import { Link } from "react-router-dom";
-import { Table, Button } from "antd";
+import { Table, Button, Card, Row, Col } from "antd";
 
 const Summary = (props) => {
     let shippingInfo = JSON.parse(window.localStorage.getItem('shippingInfo'))
@@ -30,36 +31,40 @@ const Summary = (props) => {
     ];
 
     return (
-
-        <div>
-            <h2>Summary</h2>
-            {shippingInfo !== null &&
-                <>
-                    <h3>Shipping</h3>
-                    <p><b>Address:</b> {shippingInfo.address.street}, {shippingInfo.address.state}</p>
-                    <p><b>Method:</b> {shippingInfo.method}</p>
-                    <p><b>Email:</b> {shippingInfo.email}</p>
-                </>
-            }
-            {paymentInfo !== null &&
-                <>
-                    <h3>Payment</h3>
-                    <p><b>Card Number:</b> {paymentInfo.number}</p>
-                    <p><b>Expiration Date:</b> {paymentInfo.expiration}</p>
-                    <p><b>Security Code:</b> {paymentInfo.security}</p>
-                </>
-            }
-            <h3>Items</h3>
-            <Table
-                columns={columns}
-                dataSource={props.cart}
-            />
-            <div style={{ display: "flex" }}>
-                <Button type="primary" onClick={() => handleConfirmClick()}><Link to="/confirmation">Confirm Purchase</Link></Button>
-                <Button style={{ marginLeft: "2em" }} type="primary" danger onClick={() => handleCancelClick()}><Link to="/">Cancel Purchase</Link></Button>
+        <>
+            <div>
+                <h2>Summary</h2>
+                <Row justify="space-around">
+                    <Col span={8}>
+                        {shippingInfo !== null &&
+                            <Card title="Shipping">
+                                <p><b>Address:</b> {shippingInfo.addressLine1},{shippingInfo.addressLine2}</p>
+                                <p><b>Shipping Method:</b> {shippingInfo.method}</p>
+                                <p><b>Email:</b> {shippingInfo.email}</p>
+                            </Card>
+                        }
+                    </Col>
+                    <Col span={8}>
+                        {paymentInfo !== null &&
+                            <Card title="Payment">
+                                <p><b>Card Number:</b> {paymentInfo.number}</p>
+                                <p><b>Expiration Date:</b> {paymentInfo.expiration}</p>
+                                <p><b>Security Code:</b> {paymentInfo.security}</p>
+                            </Card>
+                        }
+                    </Col>
+                </Row>
+                <h3>Items | Total: ${window.localStorage.getItem("total")}</h3>
+                <Table
+                    columns={columns}
+                    dataSource={props.cart}
+                />
+                <div className="button_container">
+                    <Button type="primary" onClick={() => handleConfirmClick()}><Link to="/confirmation">Confirm Purchase</Link></Button>
+                    <Button className="cancel_button" type="primary" danger onClick={() => handleCancelClick()}><Link to="/">Cancel Purchase</Link></Button>
+                </div>
             </div>
-        </div>
-
+        </>
     )
 };
 
