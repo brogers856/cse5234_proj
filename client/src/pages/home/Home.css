@@ -1,0 +1,20 @@
+#pageTitle {
+    margin-top: 4rem;
+}
+
+#missionCard {
+    margin-left: 6rem;
+}
+
+#visionCard {
+    margin-right: 6rem;
+}
+
+.card-container {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.blurb-title {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+}
