@@ -5,7 +5,6 @@ const { Option } = Select;
 
 const Shipping = () => {
   const onFinish = (values) => {
-    window.localStorage.setItem('step', "1")
     const newInfo = {};
 
     for (var key in Object.keys(values)) {

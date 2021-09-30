@@ -8,7 +8,6 @@ const Payment = (props) => {
   let history = useHistory();
 
   const onFinish = (values) => {
-    window.localStorage.setItem('step', "2")
     window.localStorage.setItem("paymentInfo", JSON.stringify(values));
     history.push("/summary");
   };

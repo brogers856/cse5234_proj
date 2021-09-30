@@ -7,7 +7,6 @@ const Cart = (props) => {
     let history = useHistory();
 
     function clickHandler() {
-        window.localStorage.setItem('step', "0")
         if (JSON.parse(window.localStorage.getItem('cart')).length === 0) {
             setVisible(true)
         } else {
