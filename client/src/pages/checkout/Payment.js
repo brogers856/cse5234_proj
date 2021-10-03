@@ -113,7 +113,7 @@ const Payment = (props) => {
             </Input.Group>
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Form.Item wrapperCol={{ span: 16 }} justify="center">
             <Button type="primary" htmlType="submit">
               Submit
             </Button>

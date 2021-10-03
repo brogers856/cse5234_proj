@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from'./App.css'
 import { Switch, Route } from 'react-router-dom';
 import { About, Error404, Login, Register, Confirm } from './pages';
 import { Header, CartHandler, Footer } from './components'
@@ -6,6 +7,7 @@ import { Header, CartHandler, Footer } from './components'
 const App = () => {
   return (
     <>
+    <div className={styles.content}>
       <Header />
       <div style={{ minHeight:"50rem",marginTop: "1rem", marginLeft: "2rem", marginRight: "2rem", display: "flex", flexDirection: "column" }}>
         <Switch>
@@ -20,6 +22,7 @@ const App = () => {
         </Switch>
       </div>
       <Footer />
+    </div>
     </>
   );
 }

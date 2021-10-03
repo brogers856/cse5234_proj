@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Space, Row, Radio, Select } from "antd";
+import { Form, Input, Button, Space, Row, Col, Radio, Select } from "antd";
 import { ProcessBar } from "../../components";
 
 const Shipping = () => {
@@ -103,6 +103,7 @@ const Shipping = () => {
     <>
       <ProcessBar page="1" />
       <Row type="flex" align="middle" justify="center" style={{marginTop:"2rem"}}>
+        <Col span={16}>
         <Form
           form={form}
           name="basic"
@@ -175,12 +176,13 @@ const Shipping = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Form.Item wrapperCol={{ span: 16 }} justify="center">
             <Button type="primary" htmlType="submit">
               Continue to Payment Details
             </Button>
           </Form.Item>
         </Form>
+        </Col>
       </Row>
     </>
   );

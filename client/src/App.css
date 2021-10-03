@@ -1,0 +1,44 @@
+.ant-menu {
+    background-color: #0A1451;
+    color: white;
+}
+
+.ant-menu-horizontal > .ant-menu-item a {
+    color: white;
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover, .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover, .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active, .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active, .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-open, .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open, .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected, .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected {
+    color: #FF8B48;
+    border-bottom: 2px solid #FF8B48;
+}
+
+.ant-menu-horizontal > .ant-menu-item a:hover {
+    color: #FF8B48;
+}
+
+.ant-menu-item:hover, .ant-menu-item-active, .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active, .ant-menu-submenu-title:hover {
+    color: #FF8B48;
+}
+
+.ant-btn-primary {
+    background-color: #FF8B48;
+    border-color: #FF8B48;
+}
+
+.ant-btn-primary:hover {
+    background-color: #ff975c;
+    border-color: #ff975c;
+}
+
+.ant-btn-primary:focus {
+    background-color: #ff975c;
+    border-color: #ff975c;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+    color: #FF8B48;
+}
+
+.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
+    background-color: #FF8B48;
+}
