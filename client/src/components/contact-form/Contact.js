@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Drawer, Rate, Form, Button, Col, Row, Input, Select, DatePicker, Space } from 'antd';
+import { message, Drawer, Rate, Form, Button, Col, Row, Input, Space } from 'antd';
 
 const Contact = () => {
   const [visible, setVisible] = useState(false);
 
-  const { Option } = Select;
+  const { TextArea } = Input;
+
+  const key = 'updatable';
 
   const showDrawer = () => {
     setVisible(true);
@@ -14,13 +16,21 @@ const Contact = () => {
     setVisible(false);
   };
 
+  const onSubmit = () => {
+    message.loading({ content: 'Sending...', key });
+    setTimeout(() => {
+      message.success({ content: 'Feedback sent!', key, duration: 2 });
+    }, 1000);
+    setVisible(false);
+  };
+
   return (
     <>
       <Button type="primary" onClick={showDrawer}>
         Contact Us
       </Button>
       <Drawer
-        title="Create a new account"
+        title="Contact Us"
         width={720}
         onClose={onClose}
         visible={visible}
@@ -47,6 +57,19 @@ const Contact = () => {
             </Col>
             <Col span={12}>
               <Form.Item
+                name="email"
+                label="Email"
+                rules={[
+                  { type: "email", required: true, message: "Email is required" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
                 name="orderNumber"
                 label="Order Number"
                 rules={[{ required: false }]}
@@ -54,12 +77,9 @@ const Contact = () => {
                 <Input
                   style={{ width: '100%' }}
                   addonBefore="#"
-                  placeholder="(optional)"
                 />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={16}>
             <Col span={12}>
               <Form.Item
                 name="rating"
@@ -69,48 +89,31 @@ const Contact = () => {
                 <Rate />
               </Form.Item>
             </Col>
-            <Col span={12}>
-              <Form.Item
-                name="type"
-                label="Type"
-                rules={[{ required: true, message: 'Please choose the type' }]}
-              >
-                <Select placeholder="Please choose the type">
-                  <Option value="private">Private</Option>
-                  <Option value="public">Public</Option>
-                </Select>
-              </Form.Item>
-            </Col>
           </Row>
           <Row gutter={16}>
-            <Col span={12}>
+            <Col span={24}>
               <Form.Item
-                name="approver"
-                label="Approver"
-                rules={[{ required: true, message: 'Please choose the approver' }]}
+                name="comments"
+                label="Comments"
+                rules={[{ required: false }]}
               >
-                <Select placeholder="Please choose the approver">
-                  <Option value="jack">Jack Ma</Option>
-                  <Option value="tom">Tom Liu</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="dateTime"
-                label="DateTime"
-                rules={[{ required: true, message: 'Please choose the dateTime' }]}
-              >
-                <DatePicker.RangePicker
-                  style={{ width: '100%' }}
-                  getPopupContainer={trigger => trigger.parentElement}
-                />
+                <TextArea rows={4} />
               </Form.Item>
             </Col>
           </Row>
 
         </Form>
+
+        <Row gutter={16} style={{ marginTop: "5rem" }}>
+          <Col span={24}>
+            <Button type="primary" onClick={onSubmit}>
+              Submit
+            </Button>
+          </Col>
+        </Row>
+
       </Drawer>
+
     </>
   );
 };

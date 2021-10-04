@@ -8,7 +8,7 @@ const App = () => {
   return (
     <>
     <div className={styles.content}>
-      <Header />
+      <Header className="Header" />
       <div style={{ minHeight:"50rem",marginTop: "1rem", marginLeft: "2rem", marginRight: "2rem", display: "flex", flexDirection: "column" }}>
         <Switch>
           <Route exact path="/login" component={Login} />

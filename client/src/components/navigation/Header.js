@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import {
@@ -23,17 +23,23 @@ const Header = () => {
         setCurrent(event.key);
     };
 
-    let href = window.location.href.split('/')
-    href = href[3]
+    let href = window.location.href.split('/');
+    href = href[3];
+     
     return (
         <Menu onClick={handleClick} defaultSelectedKeys={['/' + href]} selectedKeys={['/' + href]} mode="horizontal">
-            <Item key="/" icon={<ShoppingOutlined />} style={{ float: 'left' }}>
+            <Item key="/" icon={<HomeOutlined />} style={{ float: 'left' }}>
                 <Link to='/'>Home</Link>
+            </Item>
+
+            <Item key="/catalog" icon={<ShoppingOutlined />} style={{ float: 'left' }}>
+                <Link to='/catalog'>My Cart</Link>
             </Item>
 
             <Item key="/cart" icon={<ShoppingCartOutlined />} style={{ float: 'left' }}>
                 <Link to='/cart'>My Cart</Link>
             </Item>
+            
 
             <SubMenu key="account" icon={<SettingOutlined />} title="My Account" style={{ float: 'right' }}>
                 <Item key="setting:1">Option 1</Item>

@@ -24,7 +24,7 @@ const Home = () => {
               </Col>
               <Col span={2}></Col>
               <Col span={11}>
-                <img className="home-img" src="https://images.unsplash.com/photo-1512756290469-ec264b7fbf87?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80" />
+                <img className="home-img" alt="Internal view of desktop computer" src="https://images.unsplash.com/photo-1512756290469-ec264b7fbf87?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80" />
               </Col>
             </Row>
           </Card>
@@ -35,7 +35,7 @@ const Home = () => {
           <Card id="missionCard">
             <Row type="flex" justify="center">
               <Col span={11}>
-                <img className="home-img" src="https://images.unsplash.com/photo-1591238372338-22d30c883a86?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1171&q=80" />
+                <img className="home-img" alt="Internal view of desktop computer" src="https://images.unsplash.com/photo-1591238372338-22d30c883a86?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1171&q=80" />
               </Col>
               <Col span={2}></Col>
               <Col span={11}>
