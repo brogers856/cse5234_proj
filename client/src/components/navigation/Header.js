@@ -9,18 +9,16 @@ import {
     SettingOutlined,
     ShoppingCartOutlined
 } from "@ant-design/icons";
-import { useHistory } from "react-router";
 
 
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
-    let history = useHistory();
-
     const [current, setCurrent] = useState('/');
 
     const handleClick = (event) => {
         setCurrent(event.key);
+        href = current;
     };
 
     let href = window.location.href.split('/');
