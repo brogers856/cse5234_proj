@@ -33,7 +33,7 @@ const Header = () => {
             </Item>
 
             <Item key="/catalog" icon={<ShoppingOutlined />} style={{ float: 'left' }}>
-                <Link to='/catalog'>My Cart</Link>
+                <Link to='/catalog'>Catalog</Link>
             </Item>
 
             <Item key="/cart" icon={<ShoppingCartOutlined />} style={{ float: 'left' }}>
