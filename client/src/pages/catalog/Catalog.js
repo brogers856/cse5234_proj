@@ -1,49 +1,38 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Table, InputNumber, Space, Button, Alert } from "antd";
 
 const Catalog = (props) => {
-  const [data, setData] = useState(
-    [
-      {
-        key: 1,
-        product: 'Laptop',
-        price: 500,
-        quantity: 1,
-        description: 'Like new'
-      },
-      {
-        key: 2,
-        product: 'Headphones',
-        price: 50,
-        quantity: 1,
-        description: 'Lightly used'
-      },
-      {
-        key: 3,
-        product: 'Keyboard',
-        price: 25,
-        quantity: 1,
-        description: 'Brand new'
-      },
-      {
-        key: 4,
-        product: 'Monitor',
-        price: 75,
-        quantity: 1,
-        description: 'Lightly used'
-      },
-      {
-        key: 5,
-        product: 'Desktop',
-        price: 800,
-        quantity: 1,
-        description: 'Heavy use, scratches/dents'
-      },
-    ]
-  )
+  const [data, setData] = useState()
   const [visible, setVisible] = useState(false)
   const [item, setItem] = useState()
   const [quantity, setQuantity] = useState()
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('http://localhost:9080/inventory-management/inventory', {
+        method: 'GET',
+        mode: 'cors'
+      })
+      .then(response => response.json())
+      console.log(response.items)
+      formatData(response.items)
+    }
+    fetchData();
+  }, []);
+
+  const formatData = (items) => {
+    items.forEach(obj => renameKey(obj, 'id', 'key'));
+    items.forEach(obj => renameKey(obj, 'name', 'product'));
+    items.forEach(obj => renameKey(obj, 'desc', 'description'));
+    items.forEach(obj => obj.price = obj.price/100);
+    items.forEach(obj => obj.quantity = 1);
+    setData(items)
+  }
+
+  const renameKey = (obj, oldKey, newKey) => {
+    obj[newKey] = obj[oldKey];
+    delete obj[oldKey];
+  }
 
   const handleClose = () => {
     setVisible(false);
