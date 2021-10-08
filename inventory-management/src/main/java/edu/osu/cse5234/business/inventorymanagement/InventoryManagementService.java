@@ -14,9 +14,7 @@ import javax.ws.rs.PathParam;
 @Path("inventory")
 public class InventoryManagementService {
 	
-	private Inventory currentInventory;
-	
-	public InventoryManagementService() {
+	private Inventory getHardcodedInventory() {
 		Inventory currentInventory = new Inventory();
 		List<Item> availableItems = new ArrayList<Item>();
 		availableItems.add(new Item(1, "Laptop", "Like new", 20, 50000));
@@ -25,19 +23,20 @@ public class InventoryManagementService {
 		availableItems.add(new Item(4, "Monitor", "Lightly used", 15, 7500));
 		availableItems.add(new Item(5, "Desktop", "Heavy use, scratches/dents", 10, 80000));
 		currentInventory.setItems(availableItems);
-		this.currentInventory = currentInventory;
+		return currentInventory;
 	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Inventory getInventory() {
-		return currentInventory;
+		return getHardcodedInventory();
 	}
 	
 	@GET
 	@Path("/items/{id}")
 	@Produces("application/json")
 	public Response getItemById(@PathParam("id") int id) {
+		Inventory currentInventory = getHardcodedInventory();
 		List<Item> items = currentInventory.getItems();
         for (int i = 0; i < items.size(); i++) {
             Item curItem = items.get(i);
@@ -52,6 +51,7 @@ public class InventoryManagementService {
 	@Path("/items")
 	@Produces("application/json")
 	public Response getItemByName(@QueryParam("name") String name) {
+		Inventory currentInventory = getHardcodedInventory();
 		List<Item> items = currentInventory.getItems();
         for (int i = 0; i < items.size(); i++) {
             Item curItem = items.get(i);
