@@ -93,7 +93,6 @@ const Shipping = () => {
     "Wyoming"
   ];
 
-  // Why do I have to do this?
   const stateList = [];
   states.forEach(function (e) {
     stateList.push({ label: e, value: e })
@@ -107,7 +106,7 @@ const Shipping = () => {
         <Form
           form={form}
           name="basic"
-          initialValues={window.localStorage.getItem("shippingInfo")}
+          initialValues={JSON.parse(window.localStorage.getItem("shippingInfo"))}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
