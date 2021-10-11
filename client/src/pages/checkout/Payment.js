@@ -53,7 +53,6 @@ const Payment = (props) => {
                   () => ({
                     validator(_, value) {
                       if (value.length !== 15 && value.length !== 16) {
-                        console.log(JSON.parse(window.localStorage.getItem("paymentInfo")).number)
                         return Promise.reject(
                           new Error(
                             "The credit card number must be 15 or 16 digits long"
