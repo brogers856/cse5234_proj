@@ -1,19 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import './Summary.css'
 import { Link } from "react-router-dom";
-import { Table, Button, Card, Row, Col } from "antd";
+import { useHistory } from 'react-router';
+import { Table, Button, Card, Row, Col, Alert } from "antd";
 import { ProcessBar } from "../../components";
 
 const Summary = (props) => {
     let shippingInfo = JSON.parse(window.localStorage.getItem('shippingInfo'))
     let paymentInfo = JSON.parse(window.localStorage.getItem('paymentInfo'))
+    let total = JSON.parse(window.localStorage.getItem('total'))
+
+    let history = useHistory()
+    const [visible, setVisible] = useState(false)
+
+    async function checkQuantity(url = 'http://localhost:9080/order-processing/order') {
+        var data = {
+            cart: props.cart,
+            total: total,
+            shippingInfo: shippingInfo,
+            paymentInfo: paymentInfo
+        }
+
+        console.log(JSON.stringify(data))
+
+        const response = await fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Request-Method': 'cors'
+            },
+            body: JSON.stringify(data)
+        });
+
+        return response;
+    }
 
     const handleConfirmClick = () => {
-        window.localStorage.setItem('cart', [])
-        window.localStorage.setItem('total', null)
-        window.localStorage.setItem('shippingInfo', null)
-        window.localStorage.setItem('paymentInfo', null)
+        checkQuantity()
+            .then(response => {
+
+                if (response.status === 200) {
+                    console.log('Success:', response)
+                    window.localStorage.setItem('cart', [])
+                    window.localStorage.setItem('total', null)
+                    history.push('/confirmation')
+                } else {
+                    console.log('Error: ', response)
+                    setVisible(true);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
+
+    const handleClose = () => {
+        setVisible(false);
+    };
 
     const handleCancelClick = () => {
         window.localStorage.setItem('shippingInfo', null)
@@ -60,9 +104,14 @@ const Summary = (props) => {
                     dataSource={props.cart}
                 />
                 <div className="button_container">
-                    <Button type="primary" onClick={() => handleConfirmClick()}><Link to="/confirmation">Confirm Purchase</Link></Button>
+                    <Button type="primary" onClick={() => handleConfirmClick()}>Confirm Purchase</Button>
                     <Button className="cancel_button" type="primary" danger onClick={() => handleCancelClick()}><Link to="/">Cancel Purchase</Link></Button>
                 </div>
+            </div>
+            <div style={{marginTop: "2rem"}}>
+                {visible ? (
+                    <Alert message="Sorry, it looks like we don't have the stock necessary to complete your order." type="error" closable afterClose={handleClose} />
+                ) : null}
             </div>
         </>
     )
