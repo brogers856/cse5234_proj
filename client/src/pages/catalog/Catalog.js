@@ -14,14 +14,12 @@ const Catalog = (props) => {
         mode: 'cors'
       })
       .then(response => response.json())
-      console.log(response.items)
       formatData(response.items)
     }
     fetchData();
   }, []);
 
   const formatData = (items) => {
-    items.forEach(obj => renameKey(obj, 'id', 'key'));
     items.forEach(obj => renameKey(obj, 'name', 'product'));
     items.forEach(obj => renameKey(obj, 'desc', 'description'));
     items.forEach(obj => obj.price = obj.price/100);

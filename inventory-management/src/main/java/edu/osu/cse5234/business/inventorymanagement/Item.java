@@ -1,26 +1,41 @@
 package edu.osu.cse5234.business.inventorymanagement;
+import org.bson.types.ObjectId;
 
 public class Item {
-	private int id;
+	private ObjectId _id;
+	private int key;
 	private String name;
 	private String desc;
 	private int availableQuantity;
 	private int price;
 	
-	public Item(int id, String name, String desc, int availableQuantity, int price) {
-		this.id = id;
+	public Item() {
+		
+	}
+	
+	public Item(ObjectId _id, int key, String name, String desc, int availableQuantity, int price) {
+		this._id = _id;
+		this.key = key;
 		this.name = name;
 		this.desc = desc;
 		this.availableQuantity = availableQuantity;
 		this.price = price;
 	}
 	
-	public int getId() {
-		return id;
+	public ObjectId getId() {
+		return _id;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void setId(ObjectId _id) {
+		this._id = _id;
+	}
+	
+	public int getKey() {
+		return key;
+	}
+	
+	public void setKey(int key) {
+		this.key = key;
 	}
 	
 	public String getName() {
