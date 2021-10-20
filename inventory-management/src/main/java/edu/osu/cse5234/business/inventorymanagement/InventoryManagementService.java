@@ -19,6 +19,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Indexes;
 
 @Path("inventory")
 public class InventoryManagementService {
@@ -57,7 +58,8 @@ public class InventoryManagementService {
 	@Produces("application/json")
 	public Response getItemByName(@QueryParam("name") String name) {
 		MongoCollection<Document> coll = db.getCollection("items");
-		Iterator<Item> iter = coll.find(Filters.eq("name", name),Item.class).iterator();
+		coll.createIndex(Indexes.text("name"));
+		Iterator<Item> iter = coll.find(Filters.text(name),Item.class).iterator();
 		while(iter.hasNext()) {
 			return Response.status(200).entity(iter.next()).build();
 		}
