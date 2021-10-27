@@ -92,7 +92,7 @@ const Summary = (props) => {
                         {paymentInfo !== null &&
                             <Card title="Payment">
                                 <p><b>Card Number:</b> {paymentInfo.number}</p>
-                                <p><b>Expiration Date:</b> {paymentInfo.expiration}</p>
+                                <p><b>Expiration Date:</b> {paymentInfo.expiration.substr(0,10)}</p>
                                 <p><b>Security Code:</b> {paymentInfo.security}</p>
                             </Card>
                         }
