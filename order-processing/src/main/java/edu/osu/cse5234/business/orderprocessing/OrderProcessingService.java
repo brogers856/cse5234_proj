@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.jms.JMSException;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
@@ -32,7 +33,7 @@ public class OrderProcessingService {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response submitOrder(String jsonOrder) throws IOException {
+	public Response submitOrder(String jsonOrder) throws IOException, JMSException {
 		JsonbConfig config = new JsonbConfig()
 		.withPropertyNamingStrategy(PropertyNamingStrategy.CASE_INSENSITIVE);
 		
@@ -57,6 +58,7 @@ public class OrderProcessingService {
 		Document orderDetails = Document.parse(jsonOrder);
 		ordersMongoDBCollection.insertOne(orderDetails);
 		messagingHelper.initiateShipping(submittedOrder);
+		messagingHelper.receiveLabel();
 		
 		return Response.status(200).entity("Order accepted!").build();
 	}

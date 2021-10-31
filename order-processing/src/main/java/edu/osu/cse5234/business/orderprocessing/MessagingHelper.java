@@ -5,7 +5,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
+import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.Queue;
 
 @RequestScoped
@@ -19,6 +22,9 @@ public class MessagingHelper {
 	@Resource(lookup = "jms/shipmentQ")
 	private Queue queue;
 	
+	@Resource(lookup = "jms/shipmentQ2")
+	private Queue queue2;
+	
 	private Integer itemCount(Order order) {
 		Integer count = 0;
 		Item[] items = order.getCart();
@@ -27,15 +33,21 @@ public class MessagingHelper {
 		}
 		return count;
 	}
-	public void initiateShipping(Order order) {
+	public void initiateShipping(Order order) throws JMSException {
 		ShippingInfo shipping = order.getShippingDetails();
 		String message = "Address: " + shipping.getAddressLine1() + " " + shipping.getAddressLine2() + " " + shipping.getState() + " " + shipping.getZip() + "\n"
 				+ "Email: " + shipping.getEmail() + "\n"
 				+ "Number of items: " + itemCount(order) + "\n"
 				+ "Business: OldEgg\n"
 				+ "Account Num: 1234";
-		System.out.println("Sending message: \n" + message);
+		System.out.println("ORDER-PROCESSING: Sending message: \n" + message);
 		jmsContext.createProducer().send(queue, message);
-		System.out.println("Message Sent!");
+		System.out.println("ORDER-PROCESSING: Message Sent!");
+	}
+	
+	public void receiveLabel() throws JMSException {
+		JMSConsumer consumer = jmsContext.createConsumer(queue2);
+		Message message = consumer.receive();
+		System.out.println("ORDER-PROCESSING: Received: " + message.getBody(String.class));
 	}
 }

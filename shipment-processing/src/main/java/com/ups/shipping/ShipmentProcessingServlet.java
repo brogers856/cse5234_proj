@@ -25,6 +25,9 @@ public class ShipmentProcessingServlet extends HttpServlet {
 	
 	@Resource(lookup="jms/shipmentQ")
 	private Queue queue;
+	
+	@Resource(lookup="jms/shipmentQ2")
+	private Queue queue2;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,6 +48,8 @@ public class ShipmentProcessingServlet extends HttpServlet {
 			try {
 				System.out.println("Received: " + textMessage.getText());
 				out.println("Received: " + textMessage.getText());
+				String res_message = "Label Num: 54321";
+				jmsContext.createProducer().send(queue2, res_message);
 			} catch (JMSException e) {
 				out.println("Error: " + e.getMessage());
 			}
