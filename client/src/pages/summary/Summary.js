@@ -24,6 +24,7 @@ const Summary = (props) => {
         var data = {
             cart: props.cart,
             total: total,
+            status: "New",
             shippingInfo: shippingInfo,
             paymentInfo: paymentInfo
         }
