@@ -47,7 +47,7 @@ public class MessagingHelper {
 	
 	public void receiveLabel() throws JMSException {
 		JMSConsumer consumer = jmsContext.createConsumer(queue2);
-		Message message = consumer.receive();
+		Message message = consumer.receive(100);
 		System.out.println("ORDER-PROCESSING: Received: " + message.getBody(String.class));
 	}
 }

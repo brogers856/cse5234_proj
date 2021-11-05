@@ -50,6 +50,7 @@ public class ShipmentProcessingServlet extends HttpServlet {
 				out.println("Received: " + textMessage.getText());
 				String res_message = "Label Num: 54321";
 				jmsContext.createProducer().send(queue2, res_message);
+				System.out.println("Sending message...");
 			} catch (JMSException e) {
 				out.println("Error: " + e.getMessage());
 			}

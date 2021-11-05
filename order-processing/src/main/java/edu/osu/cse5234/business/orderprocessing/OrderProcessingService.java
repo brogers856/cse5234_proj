@@ -46,7 +46,7 @@ public class OrderProcessingService {
 					.path(String.valueOf(itemInCart.getKey()))
 					.request(MediaType.APPLICATION_JSON)
 					.get(Response.class);
-			
+			client.close();
 			Item itemInventory = jsonb.fromJson(inventory.readEntity(String.class), Item.class);
 			
 			if (itemInCart.getQuantity() > itemInventory.getAvailableQuantity()) {
@@ -58,6 +58,10 @@ public class OrderProcessingService {
 		Document orderDetails = Document.parse(jsonOrder);
 		ordersMongoDBCollection.insertOne(orderDetails);
 		messagingHelper.initiateShipping(submittedOrder);
+		Client client = ClientBuilder.newClient();
+		client.target("http://localhost:9080/shipment-processing/initiation")
+			.request(MediaType.APPLICATION_JSON)
+			.get();
 		messagingHelper.receiveLabel();
 		
 		return Response.status(200).entity("Order accepted!").build();
