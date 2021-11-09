@@ -19,19 +19,16 @@ const Catalog = (props) => {
         mode: 'cors'
       })
       .then(response => response.json())
-      formatData(response.items)
+      var items = response.items
+      items.forEach(obj => renameKey(obj, 'name', 'product'));
+      items.forEach(obj => renameKey(obj, 'desc', 'description'));
+      items.forEach(obj => obj.price = obj.price/100);
+      items.forEach(obj => obj.quantity = 1);
+      setData(items)
+      setLoading(false)
     }
     fetchData();
   }, []);
-
-  const formatData = (items) => {
-    items.forEach(obj => renameKey(obj, 'name', 'product'));
-    items.forEach(obj => renameKey(obj, 'desc', 'description'));
-    items.forEach(obj => obj.price = obj.price/100);
-    items.forEach(obj => obj.quantity = 1);
-    setData(items)
-    setLoading(false)
-  }
 
   const renameKey = (obj, oldKey, newKey) => {
     obj[newKey] = obj[oldKey];
