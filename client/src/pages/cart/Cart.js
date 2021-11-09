@@ -1,13 +1,33 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { Table, Button, InputNumber, Alert } from "antd";
-import { WarningOutlined } from "@ant-design/icons";
 
 const Cart = (props) => {
     const [visible, setVisible] = useState(false)
     const [message, setMessage] = useState('')
-    const [stockItems, setStockItems] = useState([])
     let history = useHistory();
+
+    const updateQuantity = (key, quantity) => {
+        const updateCart = (item, key, quantity) => {
+            if (item.key === key) {
+                item.availableQuantity = quantity;
+            }
+        }
+        props.cart.forEach(item => updateCart(item, key, quantity));
+    }
+
+    useEffect(() => {
+        async function fetchData() {
+          const response = await fetch('http://localhost:9080/inventory-management/inventory', {
+            method: 'GET',
+            mode: 'cors'
+          })
+          .then(response => response.json())
+          var items = response.items
+          items.forEach(inv => updateQuantity(inv.key, inv.availableQuantity));
+        }
+        fetchData()
+      }, [props.cart, updateQuantity]);
 
     function clickHandler() {
         if (JSON.parse(window.localStorage.getItem('cart')).length === 0) {
