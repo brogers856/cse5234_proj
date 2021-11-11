@@ -8,8 +8,6 @@ public class Order {
 	
 	private int total;
 	
-	private String status;
-	
 	@JsonbProperty("paymentInfo")
 	private PaymentInfo paymentDetails;
 	
@@ -57,13 +55,5 @@ public class Order {
 
 	public void setTotal(int total) {
 		this.total = total;
-	}	
-	
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}	
 }

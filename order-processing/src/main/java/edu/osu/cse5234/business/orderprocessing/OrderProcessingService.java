@@ -17,7 +17,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.bson.Document;
+import org.bson.BsonDocument;
+//import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -46,7 +47,7 @@ public class OrderProcessingService {
 					.path(String.valueOf(itemInCart.getKey()))
 					.request(MediaType.APPLICATION_JSON)
 					.get(Response.class);
-			client.close();
+			
 			Item itemInventory = jsonb.fromJson(inventory.readEntity(String.class), Item.class);
 			
 			if (itemInCart.getQuantity() > itemInventory.getAvailableQuantity()) {
@@ -54,15 +55,15 @@ public class OrderProcessingService {
 			}			
 		}
 		
-		MongoCollection<Document> ordersMongoDBCollection = db.getCollection("orders");
-		Document orderDetails = Document.parse(jsonOrder);
+		MongoCollection<BsonDocument> ordersMongoDBCollection = db.getCollection("orders", BsonDocument.class);
+		BsonDocument orderDetails = BsonDocument.parse(jsonOrder);
 		ordersMongoDBCollection.insertOne(orderDetails);
+		
 		messagingHelper.initiateShipping(submittedOrder);
-		Client client = ClientBuilder.newClient();
-		client.target("http://localhost:9080/shipment-processing/initiation")
-			.request(MediaType.APPLICATION_JSON)
-			.get();
-		messagingHelper.receiveLabel();
+		messagingHelper.receiveShipmentLabel();
+		
+		messagingHelper.initiatePayment(submittedOrder);
+		messagingHelper.receivePaymentLabel();
 		
 		return Response.status(200).entity("Order accepted!").build();
 	}
