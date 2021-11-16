@@ -40,23 +40,23 @@ public class ShipmentProcessingServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Receiving message...");
+		System.out.println("SHIPPING PROCESSING: Receiving message...");
 		PrintWriter out = response.getWriter();
 		Message message = jmsContext.createConsumer(queue).receive(5000);
 		if (message != null && message instanceof TextMessage) {
 			TextMessage textMessage = (TextMessage) message;
 			try {
-				System.out.println("Received: " + textMessage.getText());
-				out.println("Received: " + textMessage.getText());
+				System.out.println("SHIPPING PROCESSING: Received: " + textMessage.getText());
+				out.println("SHIPPING PROCESSING: Received: " + textMessage.getText());
 				String res_message = "Label Num: 54321";
 				jmsContext.createProducer().send(queue2, res_message);
-				System.out.println("Sending message...");
+				System.out.println("SHIPPING PROCESSING: Sending message...");
 			} catch (JMSException e) {
-				out.println("Error: " + e.getMessage());
+				out.println("SHIPPING PROCESSING: Error: " + e.getMessage());
 			}
 		} else {
-			System.out.println("Unknown or missing message content");
-			out.println("Unknown or missing message content");
+			System.out.println("SHIPPING PROCESSING: Unknown or missing message content");
+			out.println("SHIPPING PROCESSING: Unknown or missing message content");
 		}
 	}
 

@@ -17,11 +17,7 @@ import javax.jms.Queue;
 public class MessagingHelper {
 	@Inject
 	@JMSConnectionFactory("java:comp/env/jms/shipmentQCF")
-	private JMSContext jmsContextShipping;
-	
-	@Inject
-	@JMSConnectionFactory("java:comp/env/jms/paymentQCF")
-	private JMSContext jmsContextPayment;
+	private JMSContext jmsContext;
 	
 	@Resource(lookup = "jms/shipmentQ")
 	private Queue shipmentQueue;
@@ -52,12 +48,12 @@ public class MessagingHelper {
 				+ "Business: OldEgg\n"
 				+ "Account Num: 1234";
 		System.out.println("ORDER-PROCESSING: Sending message: \n" + message);
-		jmsContextShipping.createProducer().send(shipmentQueue, message);
+		jmsContext.createProducer().send(shipmentQueue, message);
 		System.out.println("ORDER-PROCESSING: Message Sent!");
 	}
 	
 	public void receiveShipmentLabel() throws JMSException {
-		JMSConsumer consumer = jmsContextShipping.createConsumer(shipmentQueue2);
+		JMSConsumer consumer = jmsContext.createConsumer(shipmentQueue2);
 		Message message = consumer.receive();
 		System.out.println("ORDER-PROCESSING: Received: " + message.getBody(String.class));
 	}
@@ -70,12 +66,12 @@ public class MessagingHelper {
 				+ "Total Cost: " + order.getTotal() + "\n"
 				+ "Account Num: 1234";
 		System.out.println("ORDER-PROCESSING: Sending message: \n" + message);
-		jmsContextPayment.createProducer().send(paymentQueue, message);
+		jmsContext.createProducer().send(paymentQueue, message);
 		System.out.println("ORDER-PROCESSING: Message Sent!");
 	}
 	
 	public void receivePaymentLabel() throws JMSException {
-		JMSConsumer consumer = jmsContextPayment.createConsumer(paymentQueue2);
+		JMSConsumer consumer = jmsContext.createConsumer(paymentQueue2);
 		Message message = consumer.receive();
 		System.out.println("ORDER-PROCESSING: Received: " + message.getBody(String.class));
 	}

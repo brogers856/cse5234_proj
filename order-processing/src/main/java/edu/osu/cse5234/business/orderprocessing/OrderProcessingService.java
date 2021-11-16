@@ -60,10 +60,19 @@ public class OrderProcessingService {
 		ordersMongoDBCollection.insertOne(orderDetails);
 		
 		messagingHelper.initiateShipping(submittedOrder);
+		Client client = ClientBuilder.newClient();
+		client.target("http://localhost:9080/shipment-processing/initiation")
+			.request(MediaType.APPLICATION_JSON)
+			.get();
 		messagingHelper.receiveShipmentLabel();
 		
 		messagingHelper.initiatePayment(submittedOrder);
+		client.target("http://localhost:9080/payment-processing/process-payment")
+			.request(MediaType.APPLICATION_JSON)
+			.get();
 		messagingHelper.receivePaymentLabel();
+		
+		client.close();
 		
 		return Response.status(200).entity("Order accepted!").build();
 	}

@@ -20,7 +20,7 @@ public class PaymentProcessingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	@JMSConnectionFactory("jms/paymentQCF")
+	@JMSConnectionFactory("jms/shipmentQCF")
 	private JMSContext jmsContext;
 	
 	@Resource(lookup="jms/paymentQ")
@@ -49,17 +49,17 @@ public class PaymentProcessingServlet extends HttpServlet {
 		if (message != null && message instanceof TextMessage) {
 			TextMessage textMessage = (TextMessage) message;
 			try {
-				System.out.println("Received: " + textMessage.getText());
-				out.println("Received: " + textMessage.getText());
-				String res_message = "Label Num: 54321";
+				System.out.println("PAYMENT PROCESSING: Received: " + textMessage.getText());
+				out.println("PAYMENT PROCESSING: Received: " + textMessage.getText());
+				String res_message = "Confirmation Num: 2017182818828182881";
 				jmsContext.createProducer().send(queue2, res_message);
-				System.out.println("Sending message...");
+				System.out.println("PAYMENT PROCESSING: Sending message...");
 			} catch (JMSException e) {
-				out.println("Error: " + e.getMessage());
+				out.println("PAYMENT PROCESSING: Error: " + e.getMessage());
 			}
 		} else {
-			System.out.println("Unknown or missing message content");
-			out.println("Unknown or missing message content");
+			System.out.println("PAYMENT PROCESSING: Unknown or missing message content");
+			out.println("PAYMENT PROCESSING: Unknown or missing message content");
 		}
 	}
 
